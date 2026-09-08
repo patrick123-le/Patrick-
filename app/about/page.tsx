@@ -6,6 +6,7 @@ import { lastDayIntroduction, lastDaySections } from "@/content/last-day";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { ResumeTree } from "@/components/ResumeTree";
+import { siteAssetPath } from "@/lib/site-path";
 
 export const metadata: Metadata = {
   title: "关于 Patrick｜Patrick的实务学习手册",
@@ -39,7 +40,7 @@ export default function AboutPage() {
             <a className="about-email" href={`mailto:${profile.email}`}>{profile.email}</a>
           </div>
           <figure className="about-hero-photo">
-            <Image src="/about/patrick-mountain.jpg" width="1706" height="1279" alt="Patrick 在雪山前的照片" priority />
+            <Image src={siteAssetPath("/about/patrick-mountain.jpg")} width="1706" height="1279" alt="Patrick 在雪山前的照片" priority />
             <figcaption><span>BEIJING · CHINA</span><strong>{profile.role}</strong></figcaption>
           </figure>
           <div className="about-hero-footer" aria-label="个人关注方向">
@@ -83,7 +84,7 @@ export default function AboutPage() {
             <p>以下内容写于我今年结束字节实习之时，是当时留下的一篇 Last Day 记录。</p>
           </div>
           <figure className="essay-feature-image">
-            <Image src="/about/last-day-ferris-wheel.jpg" width="3000" height="1708" alt="《Last Day》原文中的蓝天摩天轮照片" />
+            <Image src={siteAssetPath("/about/last-day-ferris-wheel.jpg")} width="3000" height="1708" alt="《Last Day》原文中的蓝天摩天轮照片" />
             <figcaption>把离开写成一次新的出发</figcaption>
           </figure>
         </section>
@@ -104,7 +105,7 @@ export default function AboutPage() {
                 <header><span>{section.number}</span><div><small>{section.kicker}</small><h3>{section.title}</h3></div></header>
                 <div className="essay-chapter-copy">{section.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}</div>
                 <blockquote>{section.highlight}</blockquote>
-                {index === 0 && <figure className="essay-memory-image"><Image src="/about/last-day-law-stall.png" width="600" height="575" alt="《Last Day》原文中的法律主题趣味摊位照片" /><figcaption>理想与现实之间，也可以留一点幽默。</figcaption></figure>}
+                {index === 0 && <figure className="essay-memory-image"><Image src={siteAssetPath("/about/last-day-law-stall.png")} width="600" height="575" alt="《Last Day》原文中的法律主题趣味摊位照片" /><figcaption>理想与现实之间，也可以留一点幽默。</figcaption></figure>}
               </article>
             ))}
             <div className="essay-closing"><span aria-hidden="true">≈</span><p>自由不是没有方向，创造力也不只属于某一种职业。它们更像一条始终在场的线，把每一次选择连接起来。</p></div>

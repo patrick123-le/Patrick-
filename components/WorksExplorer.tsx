@@ -8,14 +8,26 @@ import type { Work } from "@/lib/types";
 
 type SortKey = "number" | "updated" | "difficulty";
 
-export function WorksExplorer({ works, initialQuery = "", initialCategory = "全部", initialTag = "", initialSort = "number" }: { works: Work[]; initialQuery?: string; initialCategory?: string; initialTag?: string; initialSort?: SortKey }) {
+export function WorksExplorer({ works }: { works: Work[] }) {
   const categories = ["全部", ...Array.from(new Set(works.map((work) => work.category)))];
-  const [query, setQuery] = useState(initialQuery);
-  const [category, setCategory] = useState(initialCategory);
-  const [tag, setTag] = useState(initialTag);
-  const [sort, setSort] = useState<SortKey>(initialSort);
+  const [query, setQuery] = useState("");
+  const [category, setCategory] = useState("全部");
+  const [tag, setTag] = useState("");
+  const [sort, setSort] = useState<SortKey>("number");
+  const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const requestedSort = params.get("sort");
+    setQuery(params.get("q") || "");
+    setCategory(params.get("category") || "全部");
+    setTag(params.get("tag") || "");
+    setSort(requestedSort === "updated" || requestedSort === "difficulty" ? requestedSort : "number");
+    setHydrated(true);
+  }, []);
+
+  useEffect(() => {
+    if (!hydrated) return;
     const params = new URLSearchParams();
     if (query) params.set("q", query);
     if (category !== "全部") params.set("category", category);
@@ -23,7 +35,7 @@ export function WorksExplorer({ works, initialQuery = "", initialCategory = "全
     if (sort !== "number") params.set("sort", sort);
     const next = params.size ? `${window.location.pathname}?${params}` : window.location.pathname;
     window.history.replaceState({}, "", next);
-  }, [query, category, tag, sort]);
+  }, [hydrated, query, category, tag, sort]);
 
   const filtered = useMemo(() => {
     const needle = query.trim().toLowerCase();

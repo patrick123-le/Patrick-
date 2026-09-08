@@ -5,6 +5,7 @@ import { works } from "@/lib/works";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { WorkCard } from "@/components/WorkCard";
+import { siteAssetPath } from "@/lib/site-path";
 const featured = works.filter((work) => work.featured).slice(0, 6);
 
 export default function Home() {
@@ -49,7 +50,7 @@ export default function Home() {
         </section>
 
         <section className="about-preview">
-          <div className="about-photo"><div className="photo-frame photo-frame-landscape"><Image src="/about/patrick-mountain.jpg" alt="Patrick 在雪山前的旅行照片" width="1706" height="1279" /></div><span className="photo-note">北京 · 法学硕士在读</span></div>
+          <div className="about-photo"><div className="photo-frame photo-frame-landscape"><Image src={siteAssetPath("/about/patrick-mountain.jpg")} alt="Patrick 在雪山前的旅行照片" width="1706" height="1279" /></div><span className="photo-note">北京 · 法学硕士在读</span></div>
           <div className="about-copy"><p className="section-kicker">关于 Patrick</p><h2>{profile.tagline}</h2><p>{profile.intro}</p><div className="focus-list">{profile.focus.map((item) => <span key={item}>{item}</span>)}</div><Link className="text-link large-link" href="/about">看看我的实务路径 <span aria-hidden="true">→</span></Link></div>
         </section>
 

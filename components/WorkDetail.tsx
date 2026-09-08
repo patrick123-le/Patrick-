@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { RecallToggle } from "./RecallToggle";
 import { RichText } from "./RichText";
 import type { Work } from "@/lib/types";
+import { siteAssetPath } from "@/lib/site-path";
 
 export function WorkDetail({ work, previous, next }: { work: Work; previous?: Work; next?: Work }) {
   const [showAnalysis, setShowAnalysis] = useState(false);
@@ -58,8 +59,8 @@ export function WorkDetail({ work, previous, next }: { work: Work; previous?: Wo
           <div className="mindmap-grid">
             {work.mindMaps.map((mindMap, index) => (
               <figure className="mindmap-figure" key={mindMap.src}>
-                <a href={mindMap.src} target="_blank" rel="noreferrer" aria-label={`打开第 ${index + 1} 张思维导图原图`}>
-                  <Image src={mindMap.src} alt={mindMap.alt} width={mindMap.width} height={mindMap.height} sizes="(max-width: 900px) 100vw, 1080px" />
+                <a href={siteAssetPath(mindMap.src)} target="_blank" rel="noreferrer" aria-label={`打开第 ${index + 1} 张思维导图原图`}>
+                  <Image src={siteAssetPath(mindMap.src)} alt={mindMap.alt} width={mindMap.width} height={mindMap.height} sizes="(max-width: 900px) 100vw, 1080px" />
                 </a>
                 {work.mindMaps!.length > 1 && <figcaption>思维导图 {index + 1}</figcaption>}
               </figure>
