@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { access, readFile } from "node:fs/promises";
 
-const outputRoot = new URL("../dist/client/Patrick-/", import.meta.url);
+const outputRoot = new URL("../dist/client/", import.meta.url);
 const works = JSON.parse(
   await readFile(new URL("../content/works.json", import.meta.url), "utf8"),
 );
@@ -31,19 +31,25 @@ const representativePages = [
 
 for (const path of representativePages) {
   const html = await readFile(new URL(path, outputRoot), "utf8");
-  assert.match(html, /\/Patrick-\//, `${path} should use the repository base path`);
   assert.doesNotMatch(
     html,
-    /(?:href|src)="\/(?:_next|about|mindmaps|works|guestbook|privacy|resources)(?:\/|")/,
-    `${path} contains a root-relative URL that would break on GitHub Pages`,
+    /\/Patrick-\//,
+    `${path} should not contain the GitHub Pages base path`,
+  );
+  assert.match(
+    html,
+    /(?:href|src)="\//,
+    `${path} should use root-relative assets on Cloudflare Pages`,
   );
 }
 
 const home = await readFile(new URL("index.html", outputRoot), "utf8");
 assert.match(home, /Patrick的实务学习手册/);
-assert.match(home, /\/Patrick-\/_next\/static\//);
+assert.match(home, /\/_next\/static\//);
 
 const question = await readFile(new URL("works/q4/index.html", outputRoot), "utf8");
-assert.match(question, /\/Patrick-\/mindmaps\/q4-01\.jpeg/);
+assert.match(question, /\/mindmaps\/q4-01\.jpeg/);
 
-console.log(`Verified ${requiredPages.length} GitHub Pages routes and base-path assets.`);
+console.log(
+  `Verified ${requiredPages.length} Cloudflare Pages routes and root-path assets.`,
+);

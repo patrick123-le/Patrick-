@@ -17,13 +17,17 @@ export function WorksExplorer({ works }: { works: Work[] }) {
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const requestedSort = params.get("sort");
-    setQuery(params.get("q") || "");
-    setCategory(params.get("category") || "全部");
-    setTag(params.get("tag") || "");
-    setSort(requestedSort === "updated" || requestedSort === "difficulty" ? requestedSort : "number");
-    setHydrated(true);
+    const frame = window.requestAnimationFrame(() => {
+      const params = new URLSearchParams(window.location.search);
+      const requestedSort = params.get("sort");
+      setQuery(params.get("q") || "");
+      setCategory(params.get("category") || "全部");
+      setTag(params.get("tag") || "");
+      setSort(requestedSort === "updated" || requestedSort === "difficulty" ? requestedSort : "number");
+      setHydrated(true);
+    });
+
+    return () => window.cancelAnimationFrame(frame);
   }, []);
 
   useEffect(() => {

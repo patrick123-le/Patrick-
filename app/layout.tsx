@@ -1,8 +1,13 @@
 import type { Metadata } from "next";
 import "./globals.css";
 
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ||
+  process.env.CF_PAGES_URL ||
+  "http://localhost:3000";
+
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"),
+  metadataBase: new URL(siteUrl),
   title: { default: "Patrick的实务学习手册", template: "%s" },
   description: "面向法学生与初级法务从业者的法务面试练习知识库。",
   applicationName: "Patrick的实务学习手册",
